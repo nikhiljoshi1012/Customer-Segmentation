@@ -78,5 +78,21 @@ polygon(density(customer_data$Annual.Income..k..),
         col="#ccff66")
 
 
+#Analyzing Spending Score of the Customers
+
+boxplot(customer_data$Spending.Score..1.100.,
+        horizontal=TRUE,
+        col="#990000",
+        main="BoxPlot for Descriptive Analysis of Spending Score")
+
+
+
+hist(customer_data$Spending.Score..1.100.,
+     main="HistoGram for Spending Score",
+     xlab="Spending Score Class",
+     ylab="Frequency",
+     col="#6600cc",
+     labels=TRUE)
+
 
 
