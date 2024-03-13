@@ -1,3 +1,56 @@
+#Explore data
+#cleaning
+#Manipulate
+#Analyze
+#Visualize
+
+#Cleaning
+
+library(tidyverse)
+#Explore data
+View(Raw_data_Trans)
+glimpse(Raw_data_Trans)
+
+view(rawdata_new_customer_list)
+glimpse(rawdata_new_customer_list)
+
+#making a new variable newcustomer
+rawdata_new_customer_list$newcustomer_gen=as.factor(rawdata_new_customer_list$gender)
+View(rawdata_new_customer_list$gender)
+
+#Reassigning the levels
+rawdata_new_customer_list$newcustomer_gen<-factor((rawdata_new_customer_list$newcustomer_gen),levels=c("Male","Female","u"))
+levels(rawdata_new_customer_list$newcustomer_gen)
+
+
+
+
+class(rawdata_new_customer_list$newcustomer_gen)
+glimpse(rawdata_new_customer_list$newcustomer_gen)
+  
+levels(rawdata_new_customer_list$newcustomer_gen)
+
+view(rawdata_customer_address)
+
+view(rawdata_customer_demographic)
+
+view(rawdata_customer_demographic)
+
+
+
+#Select Variable
+
+names(rawdata_new_customer_list)
+
+#%>% pipe operator
+rawdata_new_customer_list %>% 
+  select(job_industry_category,gender,owns_car)
+
+
+ 
+
+
+
 
 #data exploration.
 #import the essential packages required for this role and then read our data.
