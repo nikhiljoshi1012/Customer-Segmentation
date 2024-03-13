@@ -1,7 +1,7 @@
 
 #data exploration.
 #import the essential packages required for this role and then read our data.
-customer_data=read.csv("C:\\Users\\nikhi\\Downloads\\customer-segmentation-dataset\\customer-segmentation-dataset\\Mall_Customers.csv")
+customer_data <- read.csv("C:\\Users\\nikhi\\OneDrive\\Desktop\\PNS_PROJECT\\Raw_data.xlsx")
 str(customer_data)
 names(customer_data)
 
@@ -93,6 +93,17 @@ hist(customer_data$Spending.Score..1.100.,
      ylab="Frequency",
      col="#6600cc",
      labels=TRUE)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
