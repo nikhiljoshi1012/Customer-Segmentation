@@ -1,6 +1,5 @@
 
 ##########MAIN###################
-
 ###CUSTOMER DEMOGRAPHICS####
 library(readxl)
 
@@ -76,6 +75,8 @@ View(dirty_data_TR)
 
 #####################################
 
+##############NEWCUSTOMER################
+
 dirty_data_NC <- read_excel("Raw_data.xlsx", sheet = "NewCustomerList")
 # Remove rows with any form of NA values in any column
 dirty_data_NC <- dirty_data_NC[complete.cases(dirty_data_NC), ]
@@ -96,6 +97,25 @@ dirty_data_NC<-dirty_data_NC %>%
   rename(Fname='first_name',Lname='last_name',Gender='gender',JobTitle="job_title");
 
 View(dirty_data_NC)
+#########################
+
+#After basic cleaning we Export the dataset
+install.packages("writexl")
+
+library(writexl)
+
+# Create a list of data frames (replace with your actual cleaned data)
+data_frames <- list(
+  CustomerDemographics= dirty_data_CD,
+  CutomerAddress= dirty_data_CA,
+  Transactions = dirty_data_TR,
+  NewCustomerList = dirty_data_NC
+)
+
+# Export to Excel with separate sheets
+write_xlsx(data_frames, path = 'Cleaned_data.xlsx')
+
+##########CLEANING-FINSIHED####################
 
 
 
