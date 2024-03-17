@@ -98,10 +98,49 @@ library(dplyr)
 
 rfm_table <- rfm_table %>%
   rename(
-    transaction_date = recency,
-    product_id = frequency,
-    Profit = monetary
+    recency = transaction_date,
+    frequency = product_id,
+    monetary = Profit
   )
+
+
+# Calculate quartiles for recency
+rfm_table$r_quartile <- cut(rfm_table$recency, breaks = quantile(rfm_table$recency, probs = seq(0, 1, 0.25)), labels = c('4', '3', '2', '1'))
+
+# Calculate quartiles for frequency
+rfm_table$f_quartile <- cut(rfm_table$frequency, breaks = quantile(rfm_table$frequency, probs = seq(0, 1, 0.25)), labels = c('1', '2', '3', '4'))
+
+# Calculate quartiles for monetary
+rfm_table$m_quartile <- cut(rfm_table$monetary, breaks = quantile(rfm_table$monetary, probs = seq(0, 1, 0.25)), labels = c('1', '2', '3', '4'))
+
+
+
+# RFM_table dataset
+
+rfm_table
+
+
+# Calculate RFM score
+rfm_table$rfm_score <- 100 * as.integer(rfm_table$r_quartile) + 
+  10 * as.integer(rfm_table$f_quartile) + 
+  as.integer(rfm_table$m_quartile)
+
+
+
+# Assigning customer titles based on RFM score ranges
+rfm_table$customer_title <- cut(rfm_table$rfm_score, 
+                                breaks = quantile(rfm_table$rfm_score, probs = c(0, 0.25, 0.5, 0.75, 1), na.rm = TRUE), 
+                                labels = c('Bronze', 'Silver', 'Gold', 'Platinum'),
+                                include.lowest = TRUE)
+# RFM table dataset
+
+rfm_table
+
+
+
+
+
+
 
 
 
