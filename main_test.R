@@ -66,7 +66,6 @@ max_trans_date
 
 
 library(lubridate)
-
 # Maximum Transaction Date
 max_trans_date <- max(merged_trans_cust$transaction_date)
 # Convert max_trans_date to a Date object
@@ -75,7 +74,6 @@ comparison_date <- as.Date(max_trans_date)
 
 
 library(dplyr)
-
 # Assuming 'comparison_date' is a variable containing the desired date for comparison
 rfm_table <- merged_trans_cust %>%
   group_by(customer_id) %>%
@@ -471,9 +469,17 @@ library(ggplot2)
 options(repr.plot.width=8, repr.plot.height=7)
 
 # Create the scatter plot
-ggplot(cust_trans_rfm, aes(x = recency, y = monetary)) +
-  geom_point() +
-  labs(x = "Recency", y = "Monetary ($)", title = "Recency vs Monetary")
+ggplot(cust_trans_rfm, aes(x = recency, y = monetary, color = frequency)) +
+  geom_point(size = 3, shape = 17, alpha = 0.7) +
+  scale_color_gradient(low = "blue", high = "red") +
+  labs(x = "Recency", y = "Monetary ($)", title = "Recency vs Monetary",
+       color = "Frequency") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 16, face = "bold"),
+        axis.title = element_text(size = 14),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10))
+
 
 
 
@@ -485,9 +491,17 @@ library(ggplot2)
 options(repr.plot.width=8, repr.plot.height=7)
 
 # Create the scatter plot
-ggplot(cust_trans_rfm, aes(x = frequency, y = monetary)) +
-  geom_point() +
-  labs(x = "Frequency", y = "Monetary ($)", title = "Frequency vs Monetary")
+ggplot(cust_trans_rfm, aes(x = frequency, y = monetary, color = recency)) +
+  geom_point(size = 3, shape = 16, alpha = 0.7) +
+  scale_color_gradientn(colors = c("green4", "yellow", "red")) +
+  labs(x = "Frequency", y = "Monetary ($)", title = "Frequency vs Monetary",
+       color = "Recency") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 16, face = "bold"),
+        axis.title = element_text(size = 14),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10))
+
 
 
 
