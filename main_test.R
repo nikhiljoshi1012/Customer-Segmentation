@@ -10,7 +10,7 @@ theme_set(theme_bw())
 # Loading the Transactions and Customer Demographics Datasets
 trans <- read.csv('Transactions_Cleaned.csv')
 cust <- read.csv('CustomerDemographic_Cleaned.csv')
-
+  
 
 
 head(trans) # Will display the first 6 rows by default
@@ -237,13 +237,44 @@ options(repr.plot.width=10, repr.plot.height=8)
 
 # Create the histogram
 hist(new_cust$Age.Group, breaks = 15, main = "New Customers - Age Distribution", xlab = "Age Group", ylab = "Number of Customers")
+library(ggplot2)
+library(plotly)
+
+# Your original ggplot code
+# Load required packages
+library(ggplot2)
+library(plotly)
+
+# Your original ggplot code
+gg <- ggplot(new_cust, aes(x = Age.Group)) +
+  geom_histogram(bins = 15, fill = "steelblue", color = "black") +
+  labs(title = "New Customers - Age Distribution",
+       x = "Age Group",
+       y = "Number of Customers") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 16, face = "bold"),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12))
+
+# Convert ggplot object to plotly object
+ggplotly(gg)
 
 
-# Set the size of the plot
-options(repr.plot.width=10, repr.plot.height=8)
-str(cust_trans_rfm)
 # Create the histogram
-hist(cust_trans_rfm$Age_Group, breaks = 15, main = "Old Customers - Age Distribution", xlab = "Age Group", ylab = "Number of Customers")
+library(ggplot2)
+library(plotly)
+
+gg22 <- ggplot(cust_trans_rfm, aes(x = Age_Group)) +
+  geom_histogram(bins = 15, fill = "lightgreen", color = "darkgreen") +
+  labs(title = "Old Customers - Age Distribution",
+       x = "Age Group",
+       y = "Number of Customers") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 16, face = "bold"),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12))
+
+ggplotly(gg22)
 
 
 
@@ -279,16 +310,19 @@ cust_bike_purchase_by_gender
 
 
 library(ggplot2)
+library(plotly)
 
 # Set the size of the plot
 options(repr.plot.width=8, repr.plot.height=5)
 
 # Create the bar plot
-ggplot(cust_bike_purchase_by_gender, aes(x = gender, y = Percent_of_total, fill = gender)) +
+gg33 <- ggplot(cust_bike_purchase_by_gender, aes(x = gender, y = Percent_of_total, fill = gender)) +
   geom_bar(stat = "identity") +
   labs(x = "Gender", y = "Percent of Total Purchases", title = "Female vs Male past 3 years Bike purchases") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels if needed
+
+ggplotly(gg33)
 
 
 
@@ -311,18 +345,21 @@ ggplot(filtered_new_cust, aes(x = job_industry_category)) +
 
 
 library(ggplot2)
+library(plotly)
 
 # Filter out rows where 'job_industry_category' is 'Missing'
-filtered_cust_trans_rfm <- cust_trans_rfm[!(cust_trans_rfm$job_industry_category == 'Missing'), ]
+filtered_new_cust <- new_cust[!(new_cust$job_industry_category == 'Missing'), ]
 
 # Set the size of the plot
 options(repr.plot.width=15, repr.plot.height=8)
 
 # Create the count plot
-ggplot(filtered_cust_trans_rfm, aes(x = job_industry_category)) +
+gg44 <- ggplot(filtered_new_cust, aes(x = job_industry_category)) +
   geom_bar(fill = "skyblue") +
-  labs(x = "Job Industry", y = "Number of Customers", title = "Old Customers - Job Industry Customer Distribution") +
+  labs(x = "Job Industry", y = "Number of Customers", title = "New Customers - Job Industry Customer Distribution") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels if needed
+
+ggplotly(gg44)
 
 ##############################Wealth Segmentation by Age Group####################
 ##############################
@@ -348,15 +385,18 @@ print(wealth_age_seg_new)
 
 
 library(ggplot2)
+library(plotly)
 
 # Set the size of the plot
 options(repr.plot.width=15, repr.plot.height=8)
 
 # Create the bar plot
-ggplot(wealth_age_seg_new, aes(x = Age.Group, y = `Number of Customers`, fill = wealth_segment)) +
+gg55 <- ggplot(wealth_age_seg_new, aes(x = Age.Group, y = `Number of Customers`, fill = wealth_segment)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(x = "Age Group", y = "Number of Customers", title = "New Customers - Wealth Segmentation by Age Group") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels if needed
+
+ggplotly(gg55)
 
 
 #####################Old Customers###########################
@@ -384,17 +424,18 @@ str(wealth_age_seg_old)
 
 
 library(ggplot2)
+library(plotly)
 
 # Set the size of the plot
 options(repr.plot.width=15, repr.plot.height=8)
 
 # Create the bar plot
-ggplot(wealth_age_seg_old, aes(x = Age_Group, y = `count`, fill = wealth_segment)) +
+gg66 <- ggplot(wealth_age_seg_old, aes(x = Age_Group, y = `Number of Customers`, fill = wealth_segment)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(x = "Age Group", y = "Number of Customers", title = "Old Customers - Wealth Segmentation by Age Group") +
   theme_minimal()
 
-
+ggplotly(gg66)
 
 
 ##################Car owner across each State##########################
@@ -445,31 +486,30 @@ print(state_car_owners)
 
 
 library(ggplot2)
+library(plotly)
 
 # Set the size of the plot
 options(repr.plot.width=8, repr.plot.height=7)
 
 # Create the bar plot
-ggplot(state_car_owners, aes(x = state, y = `Number of Customers`, fill = owns_car)) +
+gg77 <- ggplot(state_car_owners, aes(x = state, y = `Number of Customers`, fill = owns_car)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(x = "States", y = "Number of Customers", title = "Number of Customers who own a car") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels if needed
 
-
-
-
-
+ggplotly(gg77)
 
 ################RFM Analysis Scatter Plots#############
 
 ##########Recency vs Monetary
 library(ggplot2)
+library(plotly)
 
 # Set the size of the plot
 options(repr.plot.width=8, repr.plot.height=7)
 
 # Create the scatter plot
-ggplot(cust_trans_rfm, aes(x = recency, y = monetary, color = frequency)) +
+gg88 <- ggplot(cust_trans_rfm, aes(x = recency, y = monetary, color = frequency)) +
   geom_point(size = 3, shape = 17, alpha = 0.7) +
   scale_color_gradient(low = "blue", high = "red") +
   labs(x = "Recency", y = "Monetary ($)", title = "Recency vs Monetary",
@@ -480,18 +520,21 @@ ggplot(cust_trans_rfm, aes(x = recency, y = monetary, color = frequency)) +
         legend.title = element_text(size = 12),
         legend.text = element_text(size = 10))
 
+ggplotly(gg88)
+
 
 
 
 ##############Frequency vs Monetary###############
 ##############
 library(ggplot2)
+library(plotly)
 
 # Set the size of the plot
 options(repr.plot.width=8, repr.plot.height=7)
 
 # Create the scatter plot
-ggplot(cust_trans_rfm, aes(x = frequency, y = monetary, color = recency)) +
+gg99 <- ggplot(cust_trans_rfm, aes(x = frequency, y = monetary, color = recency)) +
   geom_point(size = 3, shape = 16, alpha = 0.7) +
   scale_color_gradientn(colors = c("green4", "yellow", "red")) +
   labs(x = "Frequency", y = "Monetary ($)", title = "Frequency vs Monetary",
@@ -502,23 +545,28 @@ ggplot(cust_trans_rfm, aes(x = frequency, y = monetary, color = recency)) +
         legend.title = element_text(size = 12),
         legend.text = element_text(size = 10))
 
+ggplotly(gg99)
 
 
 
 #################Customer Segment Distribution###################
-
 library(dplyr)
+library(ggplot2)
+library(plotly)
 
-# Select columns 'detail_cust_title', 'customer_id', and 'rank', drop duplicates, and group by 'detail_cust_title' and 'rank' while calculating the count of each group
-cust_per_title <- cust_trans_rfm %>%
-  select(detail_cust_title, customer_id, rank) %>%
-  distinct() %>%
-  group_by(detail_cust_title, rank) %>%
-  summarise(count = n()) %>%
-  arrange(rank)
+# Set the size of the plot
+options(repr.plot.width=15, repr.plot.height=8)
 
-# Print the resulting data frame
-print(cust_per_title)
+# Create the bar plot
+gg10 <- ggplot(cust_per_title, aes(x = `Number of Customers`, y = detail_cust_title)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  labs(x = "Number of Customers", y = "Customer Segment", title = "Number of Customers by Customer Segment") +
+  theme_minimal()
+
+# Convert to plotly object
+ggplotly(gg10)
+
+
 
 
 
@@ -530,19 +578,6 @@ names(cust_per_title)[3] <- "Number of Customers"
 print(cust_per_title)
 
 
-
-
-
-library(ggplot2)
-
-# Set the size of the plot
-options(repr.plot.width=15, repr.plot.height=8)
-
-# Create the bar plot
-ggplot(cust_per_title, aes(x = `Number of Customers`, y = detail_cust_title)) +
-  geom_bar(stat = "identity", fill = "skyblue") +
-  labs(x = "Number of Customers", y = "Customer Segment", title = "Number of Customers by Customer Segment") +
-  theme_minimal()
 
 ###################################################################################################################
 ###################################################################################################################
