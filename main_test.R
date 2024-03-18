@@ -331,21 +331,6 @@ ggplotly(gg33)
 
 ################################Job Industry Customer Distribution##############
 
-library(ggplot2)
-
-# Filter out rows where 'job_industry_category' is 'Missing'
-filtered_new_cust <- new_cust[!(new_cust$job_industry_category == 'Missing'), ]
-
-# Set the size of the plot
-options(repr.plot.width=15, repr.plot.height=8)
-
-# Create the count plot
-ggplot(filtered_new_cust, aes(x = job_industry_category)) +
-  geom_bar(fill = "skyblue") +
-  labs(x = "Job Industry", y = "Number of Customers", title = "New Customers - Job Industry Customer Distribution") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels if needed
-
-
 
 library(ggplot2)
 library(plotly)
@@ -363,6 +348,25 @@ gg44 <- ggplot(filtered_new_cust, aes(x = job_industry_category)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels if needed
 
 ggplotly(gg44)
+
+
+  
+library(ggplot2)
+library(plotly)
+
+# Filter out rows where 'job_industry_category' is 'Missing'
+filtered_cust_trans_rfm <- cust_trans_rfm[!(cust_trans_rfm$job_industry_category == 'Missing'), ]
+
+# Set the size of the plot
+options(repr.plot.width=15, repr.plot.height=8)
+
+# Create the count plot
+gg <- ggplot(filtered_cust_trans_rfm, aes(x = job_industry_category)) +
+  geom_bar(fill = "skyblue") +
+  labs(x = "Job Industry", y = "Number of Customers", title = "Old Customers - Job Industry Customer Distribution") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels if needed
+
+ggplotly(gg)
 
 ##############################Wealth Segmentation by Age Group####################
 ##############################
