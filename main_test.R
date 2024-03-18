@@ -278,6 +278,46 @@ ggplotly(gg22)
 
 
 
+
+
+#############################################################
+
+# Your original ggplot code
+# Load required packages
+library(ggplot2)
+library(plotly)
+
+# Your original ggplot code
+gg <- ggplot(new_cust, aes(x = Age.Group)) +
+  geom_histogram(bins = 15, fill = "steelblue", color = "black") +
+  ggtitle("New Customers - Age Distribution") +  # Adding title
+  labs(x = "Age Group", y = "Number of Customers") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 16, face = "bold"),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12))
+
+# Create the histogram
+library(ggplot2)
+library(plotly)
+
+gg22 <- ggplot(cust_trans_rfm, aes(x = Age_Group)) +
+  geom_histogram(bins = 15, fill = "lightgreen", color = "darkgreen") +
+  ggtitle("Old Customers - Age Distribution") +  # Adding title
+  labs(x = "Age Group", y = "Number of Customers") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 16, face = "bold"),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12))
+
+# Convert ggplot objects to plotly objects
+plotly_gg <- ggplotly(gg)
+plotly_gg22 <- ggplotly(gg22)
+
+# Arrange both plots side by side
+subplot(plotly_gg, plotly_gg22, nrows = 1)
+
+
 #########################################Bike related purchases over last 3 years by gender#################
 
 
